@@ -86,4 +86,6 @@ function draw() {
     particles[p].update();
     particles[p].show();
   }
+
+  draw_lines();
 }
