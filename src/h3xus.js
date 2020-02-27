@@ -1,8 +1,12 @@
 var particles = [];
 var screen_x, screen_y;
+var canvas;
+var last_time;
 
 
 function setup() {
+  frameRate(60);
+
   setup_canvas();
 
   colorMode(HSB);
@@ -10,6 +14,8 @@ function setup() {
   spawn_particles(50);
 
   textFont('Monaco', 40);
+
+  last_time = window.performance.now();
 }
 
 function setup_canvas() {
@@ -19,7 +25,7 @@ function setup_canvas() {
   if (canvasSection.length > 0) {
     screen_x = main.width();
     screen_y = main.height();
-    var canvas = createCanvas(screen_x, screen_y);
+    canvas = createCanvas(screen_x, screen_y);
 
     canvasSection.css('z-index' , '-1');
 
@@ -79,11 +85,13 @@ function get_center() {
 function draw() {
   background(255);
 
-  // var center = get_center();
+  var now = window.performance.now();
+  var delta_time = (now - last_time) / 1000;
+  last_time = now;
 
   for (var p in particles) {
     particles[p].check_bound();
-    particles[p].update();
+    particles[p].update(delta_time);
     particles[p].show();
   }
 

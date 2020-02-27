@@ -3,12 +3,12 @@
 class Particle {
   constructor(x, y, options) {
     this.position = createVector(random(screen_x), random(screen_y));
-    this.velocity = p5.Vector.random2D();
+    this.velocity = p5.Vector.random2D().mult(random(5, 25));
   }
 
   show() {
     var pos = this.position;
-  
+
     push();
     translate(pos.x, pos.y);
     ellipseMode(CENTER);
@@ -22,12 +22,13 @@ class Particle {
     return createVector(this.position.x, this.position.y);
   }
 
-  update() {
-    this.move();
+  update(delta_time) {
+    this.move(delta_time);
   }
 
-  move() {
-    this.position.add(this.velocity);
+  move(delta_time) {
+    var velocity = p5.Vector.mult(this.velocity, delta_time);
+    this.position.add(velocity);
   }
 
   check_bound() {
