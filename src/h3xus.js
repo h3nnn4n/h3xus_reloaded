@@ -8,7 +8,7 @@ var bounds;
 let font;
 
 function preload() {
-  font = loadFont('./Inconsolata.otf');
+  font = loadFont('Raleway-Regular.ttf');
 }
 
 function setup() {
