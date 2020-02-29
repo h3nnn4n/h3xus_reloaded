@@ -16,10 +16,10 @@ function draw_lines() {
         particle_2.cutoff_distance
       );
 
-      color = particle_1.options.color;
+      c = particle_1.options.color;
 
-      fill(color.r, color.g, color.b);
-      stroke(color.r, color.g, color.b);
+      fill(c.r, c.g, c.b);
+      stroke(c.r, c.g, c.b);
 
       if (p1.dist(p2) < cutoff_distance) {
         line(p1.x, p1.y, p2.x, p2.y);

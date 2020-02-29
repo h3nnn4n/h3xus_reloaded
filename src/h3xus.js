@@ -76,17 +76,22 @@ function spawn_particle() {
 }
 
 function text_spawn_particles(text) {
-  fontsize = 75;
-  points = font.textToPoints(text, 0, 0, fontsize);
-  bounds = font.textBounds(text, 0, 0, fontsize);
-  var scale = 2;
+  font_points = 75;
+  points = font.textToPoints(text, 0, 0, font_points);
+  bounds = font.textBounds(text, 0, 0, font_points);
+
+  console.log(bounds);
+
+  var font_scale = 1.29;
+  var font_x = screen_x / 2 - bounds.w / 2 - 49;
+  var font_y = screen_y / 2 - bounds.h / 2 + 20;
 
   for (let i = 0; i < points.length; i++) {
     var position = points[i];
 
     var particle = new Particle(
-      scale * position.x + width / 2 - 100,
-      scale * position.y + height / 2,
+      font_scale * position.x + font_x,
+      font_scale * position.y + font_y,
       {
         cutoff_distance_min: 27.5,
         cutoff_distance_max: 37.5,

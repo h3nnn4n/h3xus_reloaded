@@ -21,14 +21,14 @@ class Particle {
   show() {
     var pos = this.position;
 
-    var color = this.options.color;
+    var c = this.options.color;
 
     push();
     translate(pos.x, pos.y);
     ellipseMode(CENTER);
     strokeWeight(1);
-    fill(color.r, color.g, color.b);
-    stroke(color.r, color.g, color.b);
+    fill(c.r, c.g, c.b);
+    stroke(c.r, c.g, c.b);
     ellipse(0, 0, 3);
     pop();
   }
