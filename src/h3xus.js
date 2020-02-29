@@ -3,17 +3,25 @@ var screen_x, screen_y;
 var canvas;
 var last_time;
 
+var points;
+var bounds;
+let font;
+
+function preload() {
+  font = loadFont('./Inconsolata.otf');
+}
 
 function setup() {
-  frameRate(60);
+  //frameRate(60);
 
   setup_canvas();
 
-  colorMode(HSB);
+  //colorMode(RGB, 255);
+
+  textAlign(CENTER, CENTER);
 
   spawn_particles(50);
-
-  textFont('Monaco', 40);
+  text_spawn_particles('h3nnn4n');
 
   last_time = window.performance.now();
 }
@@ -37,8 +45,8 @@ function setup_canvas() {
       top: 0, left: 0
     });
   } else {
-    screen_x = 700;
-    screen_y = 600;
+    screen_x = 900;
+    screen_y = 900;
 
     createCanvas(screen_x, screen_y);
   }
@@ -53,10 +61,46 @@ function spawn_particles(n) {
 function spawn_particle() {
   var p = new Particle(
     random(100, width - 100),
-    random(100, height - 100)
+    random(100, height - 100),
+    {
+      can_move: true,
+      color: {
+        r: 120,
+        g: 120,
+        b: 120
+      }
+    }
   );
 
   particles.push(p);
+}
+
+function text_spawn_particles(text) {
+  fontsize = 75;
+  points = font.textToPoints(text, 0, 0, fontsize);
+  bounds = font.textBounds(text, 0, 0, fontsize);
+  var scale = 2;
+
+  for (let i = 0; i < points.length; i++) {
+    var position = points[i];
+
+    var particle = new Particle(
+      scale * position.x + width / 2 - 100,
+      scale * position.y + height / 2,
+      {
+        cutoff_distance_min: 27.5,
+        cutoff_distance_max: 37.5,
+        can_move: false,
+        color: {
+          r: 80,
+          g: 80,
+          b: 80
+        }
+      }
+    );
+
+    particles.push(particle);
+  }
 }
 
 function kill_particles(n) {

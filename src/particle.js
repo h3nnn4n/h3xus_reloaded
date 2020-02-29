@@ -1,19 +1,34 @@
 /*jshint esversion: 6 */
 
 class Particle {
-  constructor(x, y, options) {
-    this.position = createVector(random(screen_x), random(screen_y));
+  constructor(x, y, options = {}) {
+    this.options = options;
+
+    this.position = createVector(x, y);
+
+    if (options.cutoff_distance_min) {
+      this.cutoff_distance = random(
+        options.cutoff_distance_min,
+        options.cutoff_distance_max
+      );
+    } else {
+      this.cutoff_distance = 150;
+    }
+
     this.velocity = p5.Vector.random2D().mult(random(5, 25));
   }
 
   show() {
     var pos = this.position;
 
+    var color = this.options.color;
+
     push();
     translate(pos.x, pos.y);
     ellipseMode(CENTER);
     strokeWeight(1);
-    fill(0, 0, 0);
+    fill(color.r, color.g, color.b);
+    stroke(color.r, color.g, color.b);
     ellipse(0, 0, 3);
     pop();
   }
@@ -23,7 +38,9 @@ class Particle {
   }
 
   update(delta_time) {
-    this.move(delta_time);
+    if (this.options.can_move) {
+      this.move(delta_time);
+    }
   }
 
   move(delta_time) {
